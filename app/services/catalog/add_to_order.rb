@@ -10,6 +10,10 @@ module Catalog
       order = Order.find_by!(:id => @params[:order_id])
       @order_item = order.order_items.create!(order_item_params.merge!(:service_plan_ref => service_plan_ref))
       @order_item.update_message("info", "Order item tracking ID (x-rh-insights-request-id): #{@order_item.insights_request_id}")
+      @pre_provision_item = PreProvisionOrderTemplate.create!(order_item_params.merge!(:service_plan_ref => service_plan_ref))
+      @pre_provision_item.update_message("info", "Pre Provision tracking ID (x-rh-insights-request-id): #{@pre_provision_item.insights_request_id}")
+      @post_provision_item = PostProvisionOrderTemplate.create!(order_item_params.merge!(:service_plan_ref => service_plan_ref))
+      @post_provision_item.update_message("info", "Post Provision tracking ID (x-rh-insights-request-id): #{@post_provision_item.insights_request_id}")
 
       self
     end

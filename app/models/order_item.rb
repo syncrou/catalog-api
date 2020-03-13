@@ -6,7 +6,7 @@ class OrderItem < ApplicationRecord
 
   acts_as_tenant(:tenant)
 
-  default_scope -> { kept }
+  default_scope -> { kept.where(:type => 'OrderItem') }
 
   validates_presence_of :count
   validates_presence_of :order_id
@@ -19,6 +19,14 @@ class OrderItem < ApplicationRecord
 
   before_create :set_defaults
   before_save :sanitize_parameters, :if => :will_save_change_to_service_parameters?
+
+  def pre_provision_template
+    order.pre_provision_order_template
+  end
+
+  def post_provision_template
+    order.post_provision_order_template
+  end
 
   def set_defaults
     self.state = "Created"

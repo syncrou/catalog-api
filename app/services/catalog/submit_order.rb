@@ -14,7 +14,9 @@ module Catalog
         raise Catalog::NotAuthorized unless valid_source?(order_item.portfolio_item.service_offering_source_ref)
         fail_item(order_item) if Catalog::SurveyCompare.any_changed?(order_item.portfolio_item.service_plans)
 
+        submit_order_item(order_item.pre_provision_template) if order_item.pre_provision_template
         submit_order_item(order_item)
+        submit_order_item(order_item.post_provision_template) if order_item.post_provision_template
 
         Rails.logger.info("Order #{@order_id} submitted for provisioning")
       end

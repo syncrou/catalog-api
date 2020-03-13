@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_203814) do
+ActiveRecord::Schema.define(version: 2020_03_13_192625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 2020_02_25_203814) do
     t.integer "order_item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "reason"
     t.integer "state", default: 0
+    t.string "reason"
     t.bigint "tenant_id"
     t.datetime "request_completed_at"
     t.index ["tenant_id"], name: "index_approval_requests_on_tenant_id"
@@ -86,12 +86,13 @@ ActiveRecord::Schema.define(version: 2020_02_25_203814) do
     t.bigint "portfolio_item_id"
     t.jsonb "service_parameters"
     t.jsonb "provider_control_parameters"
-    t.string "owner"
     t.jsonb "context"
+    t.string "owner"
     t.string "external_url"
     t.string "insights_request_id"
     t.datetime "discarded_at"
     t.jsonb "service_parameters_raw"
+    t.string "type", default: "OrderItem"
     t.index ["discarded_at"], name: "index_order_items_on_discarded_at"
     t.index ["tenant_id"], name: "index_order_items_on_tenant_id"
   end
@@ -139,7 +140,6 @@ ActiveRecord::Schema.define(version: 2020_02_25_203814) do
     t.string "distributor"
     t.string "documentation_url"
     t.string "support_url"
-    t.string "service_offering_icon_ref"
     t.datetime "discarded_at"
     t.string "owner"
     t.string "service_offering_type"
